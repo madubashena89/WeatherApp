@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText et_dataInput;
     ListView lv_watherReport;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,41 +38,29 @@ public class MainActivity extends AppCompatActivity {
 
         et_dataInput = findViewById(R.id.et_dataInput);
         lv_watherReport = findViewById(R.id.lv_weather);
+        final WeatherDataSeervice weatherDataSeervice = new WeatherDataSeervice(MainActivity.this);
+
 
 
         btn_city_ID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://www.metaweather.com/api/location/search/?query=" + et_dataInput.getText().toString();
 
-                JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        String cityID = "";
+                //this didn't returned anything.
+                 weatherDataSeervice.getCityID(et_dataInput.getText().toString(), new WeatherDataSeervice.VolleyResponseListner() {
+                     @Override
+                     public void onError(String message) {
 
-                        try {
-                            JSONObject cityInfo = response.getJSONObject(0);
-                            cityID = cityInfo.getString("woeid");
+                         Toast.makeText(MainActivity.this, "Something wrong ", Toast.LENGTH_SHORT).show();
 
+                     }
 
+                     @Override
+                     public void onResponse(String cityID) {
+                         Toast.makeText(MainActivity.this, "Returned an ID of "+ cityID, Toast.LENGTH_SHORT).show();
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        Toast.makeText(MainActivity.this, "City ID is : " + cityID, Toast.LENGTH_SHORT).show();
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Error occured " + error, Toast.LENGTH_LONG).show();
-
-                    }
-                });
-                MySingleton.getInstance(MainActivity.this).addToRequestQueue(arrayRequest);
+                     }
+                 });
 
             }
 
