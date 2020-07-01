@@ -105,7 +105,26 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "You have typed " + et_dataInput.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                weatherDataSeervice.getCityForecastByName(et_dataInput.getText().toString(), new WeatherDataSeervice.GetCityByForecastByNameCallBack() {
+                    @Override
+                    public void onError(String message) {
+                        Toast.makeText(MainActivity.this,"Something went wrong..!", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onResponse(List<WeatherReportModel> weatherReportModels) {
+                        // Toast.makeText(MainActivity.this,weatherReportModels.toString(), Toast.LENGTH_SHORT).show();
+
+                        ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportModels);
+                        lv_watherReport.setAdapter(arrayAdapter);
+
+
+                    }
+                });
+
+
             }
         });
 

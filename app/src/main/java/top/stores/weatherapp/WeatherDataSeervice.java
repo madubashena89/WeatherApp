@@ -141,17 +141,49 @@ public class WeatherDataSeervice {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                forecastByIDResponse.onError("Oops something went wrong..");
             }
         });
 
         MySingleton.getInstance(context).addToRequestQueue(objectRequest);
 
     }
-//
-//    public List<WeatherReportModel> getCityForecastByName(String cityName){
-//
-//    }
+
+    public interface  GetCityByForecastByNameCallBack{
+        void onError(String message);
+        void onResponse(List<WeatherReportModel> weatherReportModels);
+    }
+
+
+
+    public void  getCityForecastByName(String cityName, final GetCityByForecastByNameCallBack getCityByForecastByNameCallBack){
+       // List<WeatherReportModel>
+
+        getCityID(cityName, new VolleyResponseListner() {
+            @Override
+            public void onError(String message) {
+                Toast.makeText(context, "Can not query the city ID..", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String cityID) {
+
+                getCityForecastByID(cityID, new ForecastByIDResponse() {
+                    @Override
+                    public void onError(String message) {
+                        getCityByForecastByNameCallBack.onError("Can not show the weather data now..");
+                    }
+
+                    @Override
+                    public void onResponse(List<WeatherReportModel> weatherReportModels) {
+                        getCityByForecastByNameCallBack.onResponse(weatherReportModels);
+                    }
+                });
+
+            }
+        });
+
+    }
 
 
 
