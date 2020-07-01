@@ -83,7 +83,7 @@ public class WeatherDataSeervice {
     public interface ForecastByIDResponse {
         void onError(String message);
 
-        void onResponse(WeatherReportModel weatherReportModel);
+        void onResponse(List<WeatherReportModel> weatherReportModels);
 
 
     }
@@ -92,38 +92,40 @@ public class WeatherDataSeervice {
 
         String url = QUERY_FOR_CITY_WEATHER_BY_ID + cityID;
 
-        final List<WeatherReportModel> report = new ArrayList<>();
+        final List<WeatherReportModel> weatherReportModels = new ArrayList<>();
         // get the json object
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
 
                 try {
                    JSONArray consolidatedWeatherList = response.getJSONArray("consolidated_weather");
-                   //get first item in the array
-                    WeatherReportModel first_day = new WeatherReportModel();
 
-                    JSONObject firstDayFromApi = (JSONObject) consolidatedWeatherList.get(0);
 
-                    first_day.setId(firstDayFromApi.getInt("id"));
-                    first_day.setWeatherStateName(firstDayFromApi.getString("weather_state_name"));
-                    first_day.setWeatherStateName(firstDayFromApi.getString("weather_state_abbr"));
-                    first_day.setWindDirectionCompass(firstDayFromApi.getString("wind_direction_compass"));
-                    first_day.setCreated(firstDayFromApi.getString("created"));
-                    first_day.setApplicableDate(firstDayFromApi.getString("applicable_date"));
-                    first_day.setMinTemp(firstDayFromApi.getLong("min_temp"));
-                    first_day.setMaxTemp(firstDayFromApi.getLong("max_temp"));
-                    first_day.setTheTemp(firstDayFromApi.getLong("the_temp"));
-                    first_day.setWindSpeed(firstDayFromApi.getLong("wind_speed"));
-                    first_day.setWindDirection(firstDayFromApi.getLong("wind_direction"));
-                    first_day.setAirPressure(firstDayFromApi.getLong("air_pressure"));
-                    first_day.setHumidity(firstDayFromApi.getInt("humidity"));
-                    first_day.setVisibility(firstDayFromApi.getLong("visibility"));
-                    first_day.setPredictability(firstDayFromApi.getInt("predictability"));
+                   for (int i =0; i< consolidatedWeatherList.length(); i++) {
 
-                    forecastByIDResponse.onResponse(first_day);
+                       WeatherReportModel oneDayWeather = new WeatherReportModel();
+                       JSONObject firstDayFromApi = (JSONObject) consolidatedWeatherList.get(i);
+
+                       oneDayWeather.setId(firstDayFromApi.getInt("id"));
+                       oneDayWeather.setWeatherStateName(firstDayFromApi.getString("weather_state_name"));
+                       oneDayWeather.setWeatherStateAbbr(firstDayFromApi.getString("weather_state_abbr"));
+                       oneDayWeather.setWindDirectionCompass(firstDayFromApi.getString("wind_direction_compass"));
+                       oneDayWeather.setCreated(firstDayFromApi.getString("created"));
+                       oneDayWeather.setApplicableDate(firstDayFromApi.getString("applicable_date"));
+                       oneDayWeather.setMinTemp(firstDayFromApi.getLong("min_temp"));
+                       oneDayWeather.setMaxTemp(firstDayFromApi.getLong("max_temp"));
+                       oneDayWeather.setTheTemp(firstDayFromApi.getLong("the_temp"));
+                       oneDayWeather.setWindSpeed(firstDayFromApi.getLong("wind_speed"));
+                       oneDayWeather.setWindDirection(firstDayFromApi.getLong("wind_direction"));
+                       oneDayWeather.setAirPressure(firstDayFromApi.getLong("air_pressure"));
+                       oneDayWeather.setHumidity(firstDayFromApi.getInt("humidity"));
+                       oneDayWeather.setVisibility(firstDayFromApi.getLong("visibility"));
+                       oneDayWeather.setPredictability(firstDayFromApi.getInt("predictability"));
+                       weatherReportModels.add(oneDayWeather);
+                   }
+                       forecastByIDResponse.onResponse(weatherReportModels);
 
 
                 } catch (JSONException e) {

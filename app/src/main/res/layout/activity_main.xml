@@ -48,8 +48,8 @@
 
     <ListView
         android:id="@+id/lv_weather"
-        android:layout_width="344dp"
-        android:layout_height="571dp"
+        android:layout_width="418dp"
+        android:layout_height="597dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/btn_getCityID"
