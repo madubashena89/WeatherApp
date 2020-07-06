@@ -1,24 +1,59 @@
-package top.stores.weatherapp;
+package top.stores.weatherapp.roomDb;
 
-public class WeatherReportModel {
+import androidx.databinding.Bindable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "weather_table")
+public class WeatherReportEntity {
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @ColumnInfo(name = "weather_state_name")
     private String weatherStateName;
+
+    @ColumnInfo(name = "weather_state_abbr")
     private String weatherStateAbbr;
+
+    @ColumnInfo(name = "wind_direction_compass")
     private String windDirectionCompass;
+
+    @ColumnInfo(name = "created")
     private String created;
+
+    @ColumnInfo(name = "applicable_date")
     private String applicableDate;
+
+    @ColumnInfo(name = "min_temp")
     private float  minTemp;
+
+    @ColumnInfo(name = "max_temp")
     private float  maxTemp;
+
+    @ColumnInfo(name = "the_temp")
     private float  theTemp;
+
+    @ColumnInfo(name = "wind_speed")
     private float windSpeed;
+
+    @ColumnInfo(name = "wind_direction")
     private float windDirection;
+
+    @ColumnInfo(name = "air_pressure")
     private float airPressure;
+
+    @ColumnInfo(name = "humidity")
     private int humidity;
+
+    @ColumnInfo(name = "visibility")
     private float visibility;
+
+    @ColumnInfo(name = "predictability")
     private int predictability;
 
-    public WeatherReportModel(int id, String weatherStateName, String weatherStateAbbr, String windDirectionCompass, String created, String applicableDate, float minTemp, float maxTemp, float theTemp, float windSpeed, float windDirection, float airPressure, int humidity, float visibility, int predictability) {
+    public WeatherReportEntity(int id, String weatherStateName, String weatherStateAbbr, String windDirectionCompass, String created, String applicableDate, float minTemp, float maxTemp, float theTemp, float windSpeed, float windDirection, float airPressure, int humidity, float visibility, int predictability) {
         this.id = id;
         this.weatherStateName = weatherStateName;
         this.weatherStateAbbr = weatherStateAbbr;
@@ -36,7 +71,7 @@ public class WeatherReportModel {
         this.predictability = predictability;
     }
 
-    public WeatherReportModel() {
+    public WeatherReportEntity() {
     }
 
     @Override

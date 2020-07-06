@@ -16,6 +16,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.stores.weatherapp.roomDb.WeatherReportEntity;
+
 public class WeatherDataSeervice {
 
     public static final String QUERY_FOR_CITY_ID = "https://www.metaweather.com/api/location/search/?query=";
@@ -83,7 +85,7 @@ public class WeatherDataSeervice {
     public interface ForecastByIDResponse {
         void onError(String message);
 
-        void onResponse(List<WeatherReportModel> weatherReportModels);
+        void onResponse(List<WeatherReportEntity> weatherReportEntities);
 
 
     }
@@ -92,7 +94,7 @@ public class WeatherDataSeervice {
 
         String url = QUERY_FOR_CITY_WEATHER_BY_ID + cityID;
 
-        final List<WeatherReportModel> weatherReportModels = new ArrayList<>();
+        final List<WeatherReportEntity> weatherReportEntities = new ArrayList<>();
         // get the json object
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -105,7 +107,7 @@ public class WeatherDataSeervice {
 
                    for (int i =0; i< consolidatedWeatherList.length(); i++) {
 
-                       WeatherReportModel oneDayWeather = new WeatherReportModel();
+                       WeatherReportEntity oneDayWeather = new WeatherReportEntity();
                        JSONObject firstDayFromApi = (JSONObject) consolidatedWeatherList.get(i);
 
                        oneDayWeather.setId(firstDayFromApi.getInt("id"));
@@ -123,9 +125,9 @@ public class WeatherDataSeervice {
                        oneDayWeather.setHumidity(firstDayFromApi.getInt("humidity"));
                        oneDayWeather.setVisibility(firstDayFromApi.getLong("visibility"));
                        oneDayWeather.setPredictability(firstDayFromApi.getInt("predictability"));
-                       weatherReportModels.add(oneDayWeather);
+                       weatherReportEntities.add(oneDayWeather);
                    }
-                       forecastByIDResponse.onResponse(weatherReportModels);
+                       forecastByIDResponse.onResponse(weatherReportEntities);
 
 
                 } catch (JSONException e) {
@@ -136,7 +138,7 @@ public class WeatherDataSeervice {
 
             // get the property called "consolidated_weather" which is an array
 
-            // get each item in the array and assign it to a new WeatherReportModel object.
+            // get each item in the array and assign it to a new WeatherReportEntity object.
 
         }, new Response.ErrorListener() {
             @Override
@@ -151,13 +153,13 @@ public class WeatherDataSeervice {
 
     public interface  GetCityByForecastByNameCallBack{
         void onError(String message);
-        void onResponse(List<WeatherReportModel> weatherReportModels);
+        void onResponse(List<WeatherReportEntity> weatherReportEntities);
     }
 
 
 
     public void  getCityForecastByName(String cityName, final GetCityByForecastByNameCallBack getCityByForecastByNameCallBack){
-       // List<WeatherReportModel>
+       // List<WeatherReportEntity>
 
         getCityID(cityName, new VolleyResponseListner() {
             @Override
@@ -175,8 +177,8 @@ public class WeatherDataSeervice {
                     }
 
                     @Override
-                    public void onResponse(List<WeatherReportModel> weatherReportModels) {
-                        getCityByForecastByNameCallBack.onResponse(weatherReportModels);
+                    public void onResponse(List<WeatherReportEntity> weatherReportEntities) {
+                        getCityByForecastByNameCallBack.onResponse(weatherReportEntities);
                     }
                 });
 

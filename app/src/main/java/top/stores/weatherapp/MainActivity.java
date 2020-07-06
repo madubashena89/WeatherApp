@@ -6,13 +6,11 @@ import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 import java.util.List;
 
 import top.stores.weatherapp.databinding.ActivityMainBinding;
+import top.stores.weatherapp.roomDb.WeatherReportEntity;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -66,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
              }
 
              @Override
-             public void onResponse(List<WeatherReportModel> weatherReportModels) {
-                // Toast.makeText(MainActivity.this,weatherReportModels.toString(), Toast.LENGTH_SHORT).show();
+             public void onResponse(List<WeatherReportEntity> weatherReportEntities) {
+                // Toast.makeText(MainActivity.this,weatherReportEntities.toString(), Toast.LENGTH_SHORT).show();
 
-                 ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportModels);
+                 ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportEntities);
                  binding.lvWeather.setAdapter(arrayAdapter);
 
 
@@ -96,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onResponse(List<WeatherReportModel> weatherReportModels) {
-                        // Toast.makeText(MainActivity.this,weatherReportModels.toString(), Toast.LENGTH_SHORT).show();
+                    public void onResponse(List<WeatherReportEntity> weatherReportEntities) {
+                        // Toast.makeText(MainActivity.this,weatherReportEntities.toString(), Toast.LENGTH_SHORT).show();
 
-                        ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportModels);
+                        ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportEntities);
                         binding.lvWeather.setAdapter(arrayAdapter);
 
 
