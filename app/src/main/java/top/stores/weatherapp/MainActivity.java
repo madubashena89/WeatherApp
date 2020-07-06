@@ -1,6 +1,7 @@
 package top.stores.weatherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,33 +12,27 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    Button btn_city_ID, btn_getWeattherByID, btn_getWeatherByName;
-    EditText et_dataInput;
-    ListView lv_watherReport;
+import top.stores.weatherapp.databinding.ActivityMainBinding;
 
+public class MainActivity extends AppCompatActivity {
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
-        btn_city_ID = findViewById(R.id.btn_getCityID);
-        btn_getWeattherByID = findViewById(R.id.btn_getWeatherByCityID);
-        btn_getWeatherByName = findViewById(R.id.btn_getWeatherByCityName);
 
-        et_dataInput = findViewById(R.id.et_dataInput);
-        lv_watherReport = findViewById(R.id.lv_weather);
         final WeatherDataSeervice weatherDataSeervice = new WeatherDataSeervice(MainActivity.this);
 
 
 
-        btn_city_ID.setOnClickListener(new View.OnClickListener() {
+        binding.btnGetCityID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //this didn't returned anything.
-                 weatherDataSeervice.getCityID(et_dataInput.getText().toString(), new WeatherDataSeervice.VolleyResponseListner() {
+                 weatherDataSeervice.getCityID(binding.etDataInput.getText().toString(), new WeatherDataSeervice.VolleyResponseListner() {
                      @Override
                      public void onError(String message) {
 
@@ -59,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        btn_getWeattherByID.setOnClickListener(new View.OnClickListener() {
+        binding.btnGetWeatherByCityID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-              weatherDataSeervice.getCityForecastByID(et_dataInput.getText().toString(), new WeatherDataSeervice.ForecastByIDResponse() {
+              weatherDataSeervice.getCityForecastByID(binding.etDataInput.getText().toString(), new WeatherDataSeervice.ForecastByIDResponse() {
              @Override
              public void onError(String message) {
                  Toast.makeText(MainActivity.this,"Something went wrong..!", Toast.LENGTH_SHORT).show();
@@ -75,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 // Toast.makeText(MainActivity.this,weatherReportModels.toString(), Toast.LENGTH_SHORT).show();
 
                  ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportModels);
-                 lv_watherReport.setAdapter(arrayAdapter);
+                 binding.lvWeather.setAdapter(arrayAdapter);
 
 
              }
@@ -87,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        btn_getWeatherByName.setOnClickListener(new View.OnClickListener() {
+        binding.btnGetWeatherByCityName.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View v) {
 
-                weatherDataSeervice.getCityForecastByName(et_dataInput.getText().toString(), new WeatherDataSeervice.GetCityByForecastByNameCallBack() {
+                weatherDataSeervice.getCityForecastByName(binding.etDataInput.getText().toString(), new WeatherDataSeervice.GetCityByForecastByNameCallBack() {
                     @Override
                     public void onError(String message) {
                         Toast.makeText(MainActivity.this,"Something went wrong..!", Toast.LENGTH_SHORT).show();
@@ -105,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         // Toast.makeText(MainActivity.this,weatherReportModels.toString(), Toast.LENGTH_SHORT).show();
 
                         ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportModels);
-                        lv_watherReport.setAdapter(arrayAdapter);
+                        binding.lvWeather.setAdapter(arrayAdapter);
 
 
                     }
