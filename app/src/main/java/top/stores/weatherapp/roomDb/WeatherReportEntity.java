@@ -1,6 +1,5 @@
 package top.stores.weatherapp.roomDb;
 
-import androidx.databinding.Bindable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

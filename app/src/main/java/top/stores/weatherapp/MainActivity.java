@@ -2,7 +2,9 @@ package top.stores.weatherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,6 +24,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         final WeatherDataSeervice weatherDataSeervice = new WeatherDataSeervice(MainActivity.this);
+
+       //RecyclerView
+     /*   private void populateData() {
+            List<DataModel> dataModelList = new ArrayList<>();
+
+            dataModelList.add(new DataModel("Android Oreo", "8.1"));
+            dataModelList.add(new DataModel("Android Pie", "9.0"));
+            dataModelList.add(new DataModel("Android Nougat", "7.0"));
+            dataModelList.add(new DataModel("Android Marshmallow", "6.0"));
+
+            MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(dataModelList, this);
+            binding.setMyAdapter(myRecyclerViewAdapter);
+        }*/
+
 
 
 
