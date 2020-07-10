@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.library.baseAdapters.BR;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import top.stores.weatherapp.databinding.ItemCardBinding;
 import top.stores.weatherapp.roomDb.WeatherReportEntity;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder>{
-    final List<WeatherReportEntity> weatherReportEntities = new ArrayList<>();
+     List<WeatherReportEntity> weatherReportEntities = new ArrayList<>();
 
     @NonNull
     @Override
@@ -43,6 +44,12 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder>{
     @Override
     public int getItemCount() {
         return weatherReportEntities.size();
+    }
+
+
+    public void setWeatherReportEntities(List<WeatherReportEntity> weatherReportEntities){
+          this.weatherReportEntities = weatherReportEntities;
+          notifyDataSetChanged();
     }
 }
 
