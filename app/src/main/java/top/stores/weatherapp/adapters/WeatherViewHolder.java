@@ -2,6 +2,7 @@ package top.stores.weatherapp.adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Calendar;
 import java.util.List;
 
 import top.stores.weatherapp.R;
@@ -41,8 +42,31 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder{
                 break;
 
         }
-
     }
+
+
+    public void setDateBelowImage(List<WeatherReportEntity> weatherReportEntities, int position){
+
+        for(int i = 0; i< weatherReportEntities.size(); i++){
+            switch (position){
+                case 0 : itemCardBinding.tvDateImage.setText("Sunday");
+                    break;
+                case 1 : itemCardBinding.tvDateImage.setText("Monday");
+                    break;
+                case 2 : itemCardBinding.tvDateImage.setText("Tuesday");
+                    break;
+                case 3 : itemCardBinding.tvDateImage.setText("Wednesday");
+                    break;
+                case 4 : itemCardBinding.tvDateImage.setText("Thursday");
+                    break;
+                case 5 : itemCardBinding.tvDateImage.setText("Friday");
+                    break;
+                case 6 : itemCardBinding.tvDateImage.setText("Saturday");
+                    break;
+                   }
+        }
+    }
+
 
 //    public void bind(WeatherReportEntity watherEntity) {
 //        itemCardBinding.tvState.setText(watherEntity.getWeatherStateName());

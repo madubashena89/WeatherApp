@@ -42,8 +42,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder>{
         holder.itemCardBinding.tvTemp.setText(String.valueOf(weatherReportEntities.get(position).getTheTemp()));
         holder.itemCardBinding.tvWindSpeed.setText(String.valueOf(weatherReportEntities.get(position).getWindSpeed()));
         holder.itemCardBinding.tvAirPressure.setText(String.valueOf(weatherReportEntities.get(position).getAirPressure()));
-        holder.itemCardBinding.cityName.setText(WeatherDataSeervice.getCityName());
+       // holder.itemCardBinding.cityName.setText(WeatherDataSeervice.getCityName());
         holder.setImage(weatherReportEntities, position);
+        holder.setDateBelowImage(weatherReportEntities, position);
     }
 
     @Override

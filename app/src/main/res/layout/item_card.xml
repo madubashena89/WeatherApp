@@ -23,17 +23,19 @@
             <ImageView
                 android:id="@+id/weatherImage"
                 android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="251dp"
                 android:layout_marginLeft="251dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="49dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginRight="32dp"
-                android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="19dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_on"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.456"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.154"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
@@ -151,12 +153,17 @@
 
             <TextView
                 android:id="@+id/tv_show_temp"
-                android:layout_width="63dp"
+                android:layout_width="0dp"
                 android:layout_height="21dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="228dp"
+                android:layout_marginRight="228dp"
                 android:text="Temp (C) :"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tv_show_high"
+                app:layout_constraintEnd_toStartOf="@+id/tv_on"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_show_high" />
 
             <TextView
@@ -184,16 +191,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="24dp"
-                android:text="City Name"
-                android:textColor="#611818"
+                android:textColor="#362E9F"
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/weatherImage"
+                app:layout_constraintEnd_toStartOf="@+id/weatherImage"
                 app:layout_constraintStart_toStartOf="@+id/weatherImage"
-                app:layout_constraintTop_toBottomOf="@+id/weatherImage"
-                app:layout_constraintVertical_bias="0.544" />
+                app:layout_constraintTop_toBottomOf="@+id/weatherImage" />
+
+            <TextView
+                android:id="@+id/tv_date_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="42dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginBottom="44dp"
+                android:textColor="#362E9F"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/city_name" />
+
+            <TextView
+                android:id="@+id/tv_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="67dp"
+                android:layout_marginRight="67dp"
+                android:layout_marginBottom="87dp"
+                android:text="on"
+                android:textColor="#362E9F"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_show_temp"
+                app:layout_constraintTop_toBottomOf="@+id/weatherImage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
