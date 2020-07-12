@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import top.stores.weatherapp.adapters.WeatherAdapter;
+import top.stores.weatherapp.adapters.WeatherViewHolder;
 import top.stores.weatherapp.databinding.ActivityMainBinding;
 import top.stores.weatherapp.databinding.ActivityMainRecylerViewBinding;
 import top.stores.weatherapp.databinding.ItemCardBinding;
@@ -124,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                final WeatherViewHolder holder = null;
+                ItemCardBinding itemCardBinding;
 
                 weatherDataSeervice.getCityForecastByName(binding.etDataInput.getText().toString(), new WeatherDataSeervice.GetCityByForecastByNameCallBack() {
                     @Override
@@ -139,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                       //  ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportEntities);
                         weatherAdapter.setWeatherReportEntities(weatherReportEntities);
                         binding.recyclerView.setAdapter(weatherAdapter);
+                       // holder.itemCardBinding.cityName.setText(binding.etDataInput.toString());
                       //  getWeather();
 
                     }

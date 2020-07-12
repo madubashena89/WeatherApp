@@ -1,5 +1,6 @@
 package top.stores.weatherapp.adapters;
 
+import android.app.Application;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.stores.weatherapp.R;
+import top.stores.weatherapp.WeatherDataSeervice;
+import top.stores.weatherapp.databinding.ActivityMainRecylerViewBinding;
 import top.stores.weatherapp.databinding.ItemCardBinding;
 import top.stores.weatherapp.roomDb.WeatherReportEntity;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder>{
      List<WeatherReportEntity> weatherReportEntities = new ArrayList<>();
+    private ActivityMainRecylerViewBinding binding;
 
     @NonNull
     @Override
@@ -38,6 +42,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder>{
         holder.itemCardBinding.tvTemp.setText(String.valueOf(weatherReportEntities.get(position).getTheTemp()));
         holder.itemCardBinding.tvWindSpeed.setText(String.valueOf(weatherReportEntities.get(position).getWindSpeed()));
         holder.itemCardBinding.tvAirPressure.setText(String.valueOf(weatherReportEntities.get(position).getAirPressure()));
+        holder.itemCardBinding.cityName.setText(WeatherDataSeervice.getCityName());
         holder.setImage(weatherReportEntities, position);
     }
 
@@ -53,50 +58,4 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder>{
     }
 }
 
-
-class WeatherViewHolder extends RecyclerView.ViewHolder{
-    public ItemCardBinding itemCardBinding;
-
-    public WeatherViewHolder(ItemCardBinding itemCardBinding) {
-        super(itemCardBinding.getRoot());
-        this.itemCardBinding = itemCardBinding;
-    }
-
-    public void setImage(List<WeatherReportEntity> weatherReportEntities, int position){
-        String state = weatherReportEntities.get(position).getWeatherStateAbbr();
-        switch (state){
-            case "sn" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_sn);
-                 break;
-            case "sl" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_sl);
-                break;
-            case "h" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_h);
-                break;
-            case "t" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_t);
-                break;
-            case "hr" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_hr);
-                break;
-            case "lr" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_lr);
-                break;
-            case "s" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_s);
-                break;
-            case "hc" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_hc);
-                break;
-            case "lc" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_lc);
-                break;
-            case "c" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_c);
-                break;
-
-        }
-
-    }
-
-//    public void bind(WeatherReportEntity watherEntity) {
-//        itemCardBinding.tvState.setText(watherEntity.getWeatherStateName());
-//        itemCardBinding.tvDate.setText(watherEntity.getApplicableDate());
-//        itemCardBinding.tvLovwTemp.append(watherEntity.getMinTemp());
-//
-////        itemCardBinding.setVariable(BR.model, obj);
-////        itemCardBinding.executePendingBindings();
-//    }
-}
 
