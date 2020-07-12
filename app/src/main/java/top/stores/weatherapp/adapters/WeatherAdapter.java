@@ -38,7 +38,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder>{
         holder.itemCardBinding.tvTemp.setText(String.valueOf(weatherReportEntities.get(position).getTheTemp()));
         holder.itemCardBinding.tvWindSpeed.setText(String.valueOf(weatherReportEntities.get(position).getWindSpeed()));
         holder.itemCardBinding.tvAirPressure.setText(String.valueOf(weatherReportEntities.get(position).getAirPressure()));
-
+        holder.setImage(weatherReportEntities, position);
     }
 
     @Override
@@ -60,6 +60,34 @@ class WeatherViewHolder extends RecyclerView.ViewHolder{
     public WeatherViewHolder(ItemCardBinding itemCardBinding) {
         super(itemCardBinding.getRoot());
         this.itemCardBinding = itemCardBinding;
+    }
+
+    public void setImage(List<WeatherReportEntity> weatherReportEntities, int position){
+        String state = weatherReportEntities.get(position).getWeatherStateAbbr();
+        switch (state){
+            case "sn" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_sn);
+                 break;
+            case "sl" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_sl);
+                break;
+            case "h" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_h);
+                break;
+            case "t" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_t);
+                break;
+            case "hr" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_hr);
+                break;
+            case "lr" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_lr);
+                break;
+            case "s" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_s);
+                break;
+            case "hc" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_hc);
+                break;
+            case "lc" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_lc);
+                break;
+            case "c" : itemCardBinding.weatherImage.setImageResource(R.drawable.ic_c);
+                break;
+
+        }
+
     }
 
 //    public void bind(WeatherReportEntity watherEntity) {

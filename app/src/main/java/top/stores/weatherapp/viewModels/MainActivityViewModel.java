@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import top.stores.weatherapp.R;
+import top.stores.weatherapp.databinding.ItemCardBinding;
 import top.stores.weatherapp.repositories.WeatherRepository;
 import top.stores.weatherapp.roomDb.WeatherReportEntity;
 
@@ -32,4 +34,6 @@ public class MainActivityViewModel extends AndroidViewModel {
         weatherList = weatherRepository.getWeatherDetailsByID(weatherID);
         return weatherList;
     }
+
+
 }

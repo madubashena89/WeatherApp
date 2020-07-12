@@ -1,6 +1,7 @@
 package top.stores.weatherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,12 +13,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Toast;
 import java.util.List;
 
 import top.stores.weatherapp.adapters.WeatherAdapter;
 import top.stores.weatherapp.databinding.ActivityMainBinding;
 import top.stores.weatherapp.databinding.ActivityMainRecylerViewBinding;
+import top.stores.weatherapp.databinding.ItemCardBinding;
 import top.stores.weatherapp.roomDb.WeatherReportEntity;
 import top.stores.weatherapp.viewModels.MainActivityViewModel;
 
@@ -166,4 +169,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @BindingAdapter("android:src")
+    public void setWeatherImage(final ImageView weatherImage, MainActivityViewModel viewModel ){
+
+        viewModel.getWeatherList().observe(this, new Observer<List<WeatherReportEntity>>() {
+            @Override
+            public void onChanged(List<WeatherReportEntity> weatherReportEntities) {
+                String state = String.valueOf(weatherReportEntities.get(2).getWeatherStateAbbr());
+                switch (state){
+                    case "sn" : weatherImage.setImageResource(R.drawable.ic_s);
+                    case "sl" : weatherImage.setImageResource(R.drawable.ic_sl);
+                    case "h" : weatherImage.setImageResource(R.drawable.ic_h);
+                    case "t" : weatherImage.setImageResource(R.drawable.ic_launcher_background);
+                    case "hr" : weatherImage.setImageResource(R.drawable.ic_launcher_background);
+                    case "lr" : weatherImage.setImageResource(R.drawable.ic_launcher_background);
+                    case "s" : weatherImage.setImageResource(R.drawable.ic_launcher_background);
+                    case "hc" : weatherImage.setImageResource(R.drawable.ic_launcher_background);
+                    case "lc" : weatherImage.setImageResource(R.drawable.ic_launcher_background);
+                    case "c" : weatherImage.setImageResource(R.drawable.ic_launcher_background);
+
+                }
+
+            }
+        });
+    }
+
+
+
 }

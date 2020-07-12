@@ -2,6 +2,7 @@ package top.stores.weatherapp.roomDb;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "weather_table")
@@ -52,6 +53,7 @@ public class WeatherReportEntity {
     @ColumnInfo(name = "predictability")
     private int predictability;
 
+    @Ignore
     public WeatherReportEntity(int id, String weatherStateName, String weatherStateAbbr, String windDirectionCompass, String created, String applicableDate, float minTemp, float maxTemp, float theTemp, float windSpeed, float windDirection, float airPressure, int humidity, float visibility, int predictability) {
         this.id = id;
         this.weatherStateName = weatherStateName;
