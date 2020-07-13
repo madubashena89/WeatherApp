@@ -187,11 +187,7 @@ public class WeatherDataSeervice {
 
     }
 
-    public static String getCityName(){
-        String cityName = "";
 
-        return cityName;
-    }
 
 
 

@@ -22,7 +22,7 @@ public interface WeatherDao {
     void delete (WeatherReportEntity weatherEntity);
 
     @Query("SELECT * FROM weather_table")
-    LiveData<List<WeatherReportEntity>> getAllWeatherDetails();
+    List<WeatherReportEntity> getAllWeatherDetails();
 
     @Query("SELECT * FROM weather_table WHERE id==:weatherID")
     LiveData<List<WeatherReportEntity>> getAllWeatherDetailsById(int weatherID);

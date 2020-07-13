@@ -11,6 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/mint_cream_color"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:padding="10dp"
         android:layout_margin="@dimen/cardview_compat_inset_shadow">
 
@@ -202,28 +206,29 @@
                 android:id="@+id/tv_date_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
-                android:layout_marginLeft="42dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="180dp"
                 android:layout_marginBottom="44dp"
                 android:textColor="#362E9F"
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/city_name" />
+                app:layout_constraintStart_toStartOf="@+id/city_name"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_on"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="67dp"
-                android:layout_marginRight="67dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginRight="60dp"
                 android:layout_marginBottom="87dp"
                 android:text="on"
                 android:textColor="#362E9F"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_show_temp"
                 app:layout_constraintTop_toBottomOf="@+id/weatherImage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
