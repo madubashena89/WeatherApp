@@ -9,8 +9,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Application;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -28,13 +31,17 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import top.stores.weatherapp.adapters.WeatherAdapter;
 import top.stores.weatherapp.adapters.WeatherViewHolder;
+import top.stores.weatherapp.asynctasks.HttpGetRequest;
 import top.stores.weatherapp.databinding.ActivityMainBinding;
 import top.stores.weatherapp.databinding.ActivityMainRecylerViewBinding;
 import top.stores.weatherapp.databinding.ItemCardBinding;
 import top.stores.weatherapp.repositories.WeatherRepository;
+import top.stores.weatherapp.roomDb.WeatherDao;
+import top.stores.weatherapp.roomDb.WeatherDataBase;
 import top.stores.weatherapp.roomDb.WeatherReportEntity;
 import top.stores.weatherapp.viewModels.MainActivityViewModel;
 
@@ -61,7 +68,34 @@ public class MainActivity extends AppCompatActivity {
 //        recyclerView.setAdapter(weatherAdapter);
 //        getWeather();
 
+     /*   WeatherDataBase db = WeatherDataBase.getInstance(this);
 
+
+
+
+            final List<WeatherReportEntity> weatherReportEntities = new ArrayList<>();
+
+            WeatherReportEntity oneDayWeather = new WeatherReportEntity();
+
+            oneDayWeather.setId(5);
+            oneDayWeather.setWeatherStateName("weather_state_name");
+            oneDayWeather.setWeatherStateAbbr("weather_state_abbr");
+            oneDayWeather.setWindDirectionCompass("wind_direction_compass");
+            oneDayWeather.setCreated("created");
+            oneDayWeather.setApplicableDate("applicable_date");
+            oneDayWeather.setMinTemp(90);
+            oneDayWeather.setMaxTemp(70);
+            oneDayWeather.setTheTemp(60);
+            oneDayWeather.setWindSpeed(80);
+            oneDayWeather.setWindDirection(90);
+            oneDayWeather.setAirPressure(89);
+            oneDayWeather.setHumidity(89);
+            oneDayWeather.setVisibility(90);
+            oneDayWeather.setPredictability(70);
+            weatherReportEntities.add(oneDayWeather);
+            //weatherDao().insert(oneDayWeather);
+        db.weatherDao().insert(oneDayWeather);
+        Log.d("DBVal","db.weatherDao().getAllWeatherDetails()" );*/
        //RecyclerView
      /*   private void populateData() {
             List<DataModel> dataModelList = new ArrayList<>();
@@ -117,13 +151,14 @@ public class MainActivity extends AppCompatActivity {
              }
 
              @Override
-             public void onResponse(List<WeatherReportEntity> weatherReportEntities) {
+             public void onResponse(List<WeatherReportEntity> weatherReportEntities) throws ExecutionException, InterruptedException {
                 // Toast.makeText(MainActivity.this,weatherReportEntities.toString(), Toast.LENGTH_SHORT).show();
 
                 // ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportEntities);
                 // binding.lvWeather.setAdapter(arrayAdapter);
+                 weatherAdapter.setWeatherReportEntities(weatherReportEntities);
                  binding.recyclerView.setAdapter(weatherAdapter);
-                 getWeather();
+                // getWeather();
 
              }
          });
@@ -139,32 +174,39 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+/*                HttpGetRequest getRequest = new HttpGetRequest(getApplicationContext());
+                getRequest.execute(binding.etDataInput.getText().toString());
              //  viewModel.parseWeatherPayloadToRepositoryByName(binding.etDataInput.getText().toString());
-                paerseResponseToWeatherEntityByCityName(binding.etDataInput.getText().toString());
+                //paerseResponseToWeatherEntityByCityName(binding.etDataInput.getText().toString());
                 binding.recyclerView.setAdapter(weatherAdapter);
-                getWeather();
+                try {
+                    getWeather();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }*/
 
 
+                weatherDataSeervice.getCityForecastByName(binding.etDataInput.getText().toString(), new WeatherDataSeervice.GetCityByForecastByNameCallBack() {
+                    @Override
+                    public void onError(String message) {
+                        Toast.makeText(MainActivity.this,"Something went wrong..!", Toast.LENGTH_SHORT).show();
 
-//                weatherDataSeervice.getCityForecastByName(binding.etDataInput.getText().toString(), new WeatherDataSeervice.GetCityByForecastByNameCallBack() {
-//                    @Override
-//                    public void onError(String message) {
-//                        Toast.makeText(MainActivity.this,"Something went wrong..!", Toast.LENGTH_SHORT).show();
-//
-//                    }
-//
-//                    @Override
-//                    public void onResponse(List<WeatherReportEntity> weatherReportEntities) {
-//                        // Toast.makeText(MainActivity.this,weatherReportEntities.toString(), Toast.LENGTH_SHORT).show();
-//
-//                      //  ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportEntities);
-//                        weatherAdapter.setWeatherReportEntities(weatherReportEntities);
-//                        binding.recyclerView.setAdapter(weatherAdapter);
-//                       // holder.itemCardBinding.cityName.setText(binding.etDataInput.toString());
-//                      //  getWeather();
-//
-//                    }
-//                });
+                    }
+
+                    @Override
+                    public void onResponse(List<WeatherReportEntity> weatherReportEntities) {
+                        // Toast.makeText(MainActivity.this,weatherReportEntities.toString(), Toast.LENGTH_SHORT).show();
+
+                      //  ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportEntities);
+                        weatherAdapter.setWeatherReportEntities(weatherReportEntities);
+                        binding.recyclerView.setAdapter(weatherAdapter);
+                       // holder.itemCardBinding.cityName.setText(binding.etDataInput.toString());
+                      //  getWeather();
+
+                    }
+                });
 
 
             }
@@ -173,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void getWeather(){
+    private void getWeather() throws ExecutionException, InterruptedException {
         viewModel.getWeatherList().observe(this, new Observer<List<WeatherReportEntity>>() {
             @Override
             public void onChanged(List<WeatherReportEntity> weatherReportEntities) {
@@ -203,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject cityInfo = response.getJSONObject(0);
                     cityID = cityInfo.getString("woeid");
-
+                    paerseResponseToWeatherEntityByCityID(cityID);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -211,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // this worked, but it didn't return the id number to Main Activity
                 Toast.makeText(getApplicationContext(), "City ID is : " + cityID, Toast.LENGTH_SHORT).show();
-                paerseResponseToWeatherEntityByCityID(cityID);
+
 
             }
         }, new Response.ErrorListener() {
@@ -296,5 +338,8 @@ public class MainActivity extends AppCompatActivity {
         String cityID = getCityIdByityName(cityName);
         paerseResponseToWeatherEntityByCityID(cityID);
     }
+
+
+
 
 }

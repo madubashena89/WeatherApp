@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import top.stores.weatherapp.roomDb.WeatherReportEntity;
 
@@ -85,7 +86,7 @@ public class WeatherDataSeervice {
     public interface ForecastByIDResponse {
         void onError(String message);
 
-        void onResponse(List<WeatherReportEntity> weatherReportEntities);
+        void onResponse(List<WeatherReportEntity> weatherReportEntities) throws ExecutionException, InterruptedException;
 
 
     }
@@ -130,7 +131,7 @@ public class WeatherDataSeervice {
                        forecastByIDResponse.onResponse(weatherReportEntities);
 
 
-                } catch (JSONException e) {
+                } catch (JSONException | ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }

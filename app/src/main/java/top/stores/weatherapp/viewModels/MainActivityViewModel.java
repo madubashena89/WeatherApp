@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import top.stores.weatherapp.R;
 import top.stores.weatherapp.databinding.ItemCardBinding;
@@ -36,13 +37,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 //        return weatherList;
 //    }
 
-    public void parseWeatherPayloadToRepositoryByID(String cityID){
-        weatherRepository.paerseResponseToWeatherEntityByCityID(cityID);
-    }
 
-    public void parseWeatherPayloadToRepositoryByName(String cityName){
-        weatherRepository.paerseResponseToWeatherEntityByCityName(cityName);
-    }
 
 
 
